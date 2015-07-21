@@ -1,33 +1,40 @@
 var http = require('http')
 var url = require('url')
 
+function parseTime(time) {
+    return {
+        hour: time.getHours(),
+        minute: time.getMinutes(),
+        second: time.getSeconds()
+    }
+}
 
-//console.log(process.argv)
+function unixtime (time) {
+    return { unixtime: time.getTime() }
+}
 
 var server = http.createServer(function (req, res) {
     if (req.method != 'GET') {
         return res.end("Sorry, you have to use GET")
     }
 
-
     var q = url.parse(req.url, true)
-    console.log(q)
-
-    res.writeHead(200, {'contenty-type': 'text/json'})
-
     var now = new Date(q.query.iso)
-    console.log(now)
-    var jsonDate = JSON.stringify({hour: now.getHours(), minute: now.getMinutes(), second: now.getSeconds()}) //,,)
-    var jsonUnixDate = JSON.stringify({unixtime: now.getTime()})
+    var result
 
-    console.log(jsonDate)
-    console.log(jsonUnixDate)
+    if(/^\/api\/parsetime/.test(q.pathname)) {
+        result = parseTime(now)
+    } else if(/^\/api\/unixtime/.test(q.pathname)) {
+        result = unixtime(now)
+    }
 
-    if (q.pathname === "/api/parsetime") {
-        return res.end(jsonDate)
+    if (result) {
+        res.writeHead(200, {'contenty-type': 'text/json'})
+        res.end(JSON.stringify(result))
     } else {
-        return res.end (jsonUnixDate)
+        res.writeHead(404)
+        res.end()
     }
 })
 
-server.listen(process.argv[2]);
+server.listen(Number(process.argv[2]))
