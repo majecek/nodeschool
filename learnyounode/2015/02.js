@@ -1,6 +1,8 @@
-var args = process.argv, total = 0
+var args = process.argv, total = 0;
+
+console.log(process.argv);
 
 args.slice(2).forEach(function (each) {
-	total += +each
-})
-console.log(total)
+	total += Number(each)
+});
+console.log(total);
