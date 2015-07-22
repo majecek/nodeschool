@@ -1,3 +1,4 @@
+//noinspection Eslint
 /**
  * Created by marek on 22/07/15.
  */

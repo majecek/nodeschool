@@ -13,11 +13,27 @@ var TodoBox = React.createClass({
 });
 
 var TodoList = React.createClass({
-    render: function() {
+    render: function () {
         return (
             <div className="todoList">
-                I am a TodoList.
+                <table style={{border: "2px solid black"}}>
+                    <tbody>
+                    <Todo title="Shopping">Milk</Todo>
+                    <Todo title="Hair cut">13:00</Todo>
+                    </tbody>
+                </table>
             </div>
+        );
+    }
+});
+
+var Todo = React.createClass({
+    render: function () {
+        return (
+            <tr>
+                <td style={{border: "1px solid black"}}>{this.props.title}</td>
+                <td style={{border: "1px solid black"}}>{this.props.children}</td>
+            </tr>
         )
     }
 });
@@ -33,3 +49,25 @@ var TodoForm = React.createClass({
 });
 
 module.exports = TodoBox;
+
+
+/*
+
+ <div class="todoList">
+ <table style="border:2px solid black;">
+ <tbody>
+ <tr>
+ <td style="border:1px solid black;">Shopping</td>
+ <td style="border:1px solid black;">Milk</td>
+ </tr>
+ <tr>
+ <td style="border:1px solid black;">Hair cut</td>
+ <td style="border:1px solid black;">13:00</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+
+
+
+ */
