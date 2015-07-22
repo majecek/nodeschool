@@ -28,13 +28,25 @@ var TodoList = React.createClass({
 });
 
 var Todo = React.createClass({
-    render: function () {
+    getInitialState: function() {
+        return {
+            checked: false
+        }
+    },
+    handleChange: function(e) {
+        this.setState({checked: e.target.checked});
+    },
+    propTypes: {
+        title: React.PropTypes.string.isRequired
+    },
+    render: function() {
         return (
             <tr>
-                <td style={{border: "1px solid black"}}>{this.props.title}</td>
-                <td style={{border: "1px solid black"}}>{this.props.children}</td>
+                <td style={style.tableContent}><input type="checkbox" checked={this.state.checked} onChange={this.handleChange} /></td>
+                <td style={style.tableContent}>{this.props.title}</td>
+                <td style={style.tableContent}>{this.props.children}</td>
             </tr>
-        )
+        );
     }
 });
 
@@ -48,26 +60,10 @@ var TodoForm = React.createClass({
     }
 });
 
+var style = {
+    tableContent: {
+        border: "1px solid black"
+    }
+}
+
 module.exports = TodoBox;
-
-
-/*
-
- <div class="todoList">
- <table style="border:2px solid black;">
- <tbody>
- <tr>
- <td style="border:1px solid black;">Shopping</td>
- <td style="border:1px solid black;">Milk</td>
- </tr>
- <tr>
- <td style="border:1px solid black;">Hair cut</td>
- <td style="border:1px solid black;">13:00</td>
- </tr>
- </tbody>
- </table>
- </div>
-
-
-
- */
